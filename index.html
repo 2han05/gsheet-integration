@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Form to Google Spreadsheet</title>
+    <title>Submit Your Data</title>
     <style>
-        /* Reset some default styles */
+        /* General reset */
         * {
             margin: 0;
             padding: 0;
@@ -14,37 +14,47 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f7fa;
-            color: #333;
+            background-color: #121212; /* Dark background */
+            color: #f1f1f1; /* Light text for contrast */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px;
             flex-direction: column;
         }
 
         h2 {
-            font-size: 2em;
+            font-size: 2.4em;
+            color: #fff;
             margin-bottom: 20px;
-            color: #333;
+            text-align: center;
         }
 
-        form {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+        /* Main container to hold the form and data */
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
             width: 100%;
-            max-width: 400px;
-            box-sizing: border-box;
+            max-width: 1200px;
+        }
+
+        /* Form Styling */
+        form {
+            background: #1e1e1e; /* Dark form background */
+            border-radius: 12px;
+            padding: 40px;
+            width: 45%;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
 
         label {
-            font-size: 1em;
-            font-weight: bold;
-            margin-bottom: 8px;
-            display: inline-block;
-            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: block;
+            color: #f1f1f1; /* Light label color */
         }
 
         input[type="text"],
@@ -52,33 +62,35 @@
             width: 100%;
             padding: 14px;
             margin: 10px 0 20px 0;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            border: 1px solid #333; /* Subtle border */
+            border-radius: 8px;
+            background-color: #333; /* Dark background for inputs */
+            color: #fff; /* White text in inputs */
             font-size: 1em;
             transition: border-color 0.3s ease;
         }
 
         input[type="text"]:focus,
         input[type="number"]:focus {
-            border-color: #4CAF50;
+            border-color: #fff; /* Focus border white */
             outline: none;
         }
 
         button {
             width: 100%;
-            padding: 14px;
-            font-size: 1em;
-            background-color: #4CAF50;
-            color: white;
+            padding: 16px;
+            font-size: 1.2em;
+            background-color: #333; /* Dark button */
+            color: #f1f1f1; /* Light text */
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
+            margin-top: 20px;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 10px;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #444; /* Slightly lighter on hover */
             transform: translateY(-2px);
         }
 
@@ -86,52 +98,97 @@
             transform: translateY(0);
         }
 
+        /* Data List Styling */
         #dataList {
-            margin-top: 30px;
-            width: 100%;
-            max-width: 600px;
+            width: 45%;
+            margin-left: 30px; /* Space between form and data */
+            background: #1e1e1e;
             padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            max-height: 500px;
+            overflow-y: auto; /* Enable scrolling */
         }
 
         .data-item {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            margin-bottom: 10px;
+            background: #2b2b2b;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            color: #f1f1f1;
+            transition: transform 0.3s ease;
         }
 
-        .data-item:last-child {
-            border-bottom: none;
+        .data-item:hover {
+            transform: translateY(-5px);
         }
 
         .data-item p {
-            margin: 5px 0;
-            color: #444;
+            margin: 8px 0;
+            font-size: 1.1em;
         }
 
+        .data-item p strong {
+            color: #fff; /* White color for emphasis */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            form {
+                width: 80%;
+                padding: 25px;
+            }
+
+            #dataList {
+                width: 80%;
+                margin-left: 0;
+                margin-top: 30px;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+
+            button {
+                padding: 14px;
+                font-size: 1.1em;
+            }
+
+            .data-item {
+                padding: 12px;
+            }
+        }
     </style>
 </head>
 <body>
 
 <h2>Submit Your Data</h2>
 
-<form id="dataForm">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+<div class="container">
+    <!-- Form Section -->
+    <form id="dataForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
 
-    <label for="score">Score:</label>
-    <input type="number" id="score" name="score" placeholder="Enter your score" required>
+        <label for="score">Score:</label>
+        <input type="number" id="score" name="score" placeholder="Enter your score" required>
 
-    <button type="button" id="saveBtn">Save Data</button>
-    <button type="button" id="loadBtn">Load Data</button>
-</form>
+        <button type="button" id="saveBtn">Save Data</button>
+        <button type="button" id="loadBtn">Load Data</button>
+    </form>
 
-<div id="dataList"></div>
+    <!-- Data List Section -->
+    <div id="dataList"></div>
+</div>
 
 <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyH3xxAAOAbgXm4zjHUJEjD87ceaUKQgm8ACSjguiKW3eP11Gj5f4epUu0tY83GcnVBGw/exec"; // paste your Web App URL here
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyH3xxAAOAbgXm4zjHUJEjD87ceaUKQgm8ACSjguiKW3eP11Gj5f4epUu0tY83GcnVBGw/exec"; // Replace with your Web App URL
 
     // Save data to Google Sheets
     document.getElementById("saveBtn").addEventListener("click", () => {
